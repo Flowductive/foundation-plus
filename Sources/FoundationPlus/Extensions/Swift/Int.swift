@@ -35,4 +35,9 @@ public extension Int {
   var weeks: TimeInterval {
     return 7 * days
   }
+  
+  /// A value plural.
+  var s: String {
+    if self == 1 { return "" } else { return "s" }
+  }
 }
