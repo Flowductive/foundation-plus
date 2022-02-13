@@ -9,6 +9,13 @@ import Foundation
 
 public extension String {
   
+  // MARK: - Public Properties
+  
+  /// A version of the string that is only alphanumeric.
+  var alphanumeric: String {
+    return self.components(separatedBy: CharacterSet.alphanumerics.inverted).joined().lowercased()
+  }
+  
   // MARK: - Public Methods
   
   /**
@@ -38,5 +45,16 @@ public extension String {
     
     let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
     return emailPred.evaluate(with: email)
+  }
+  
+  /**
+   Gets a version of the string that is only alphanumeric, with additional provided characters.
+   
+   - parameter otherChars: The other characters to allow in the string.
+   - returns: The string, with only alphanumeric and allowed characters.
+   */
+  func alphernumeric(with otherChars: Unicode.Scalar ...) -> String {
+    let otherSet: CharacterSet = CharacterSet(otherChars)
+    return self.components(separatedBy: CharacterSet.alphanumerics.union(otherSet).inverted).joined()
   }
 }
