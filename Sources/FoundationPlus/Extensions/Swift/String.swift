@@ -16,6 +16,16 @@ public extension String {
     return self.components(separatedBy: CharacterSet.alphanumerics.inverted).joined().lowercased()
   }
   
+  // MARK: - Static Methods
+  
+  /**
+   Returns a random string in the given character set.
+   */
+  static func random(length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return String((0..<length).map{ _ in letters.randomElement()! })
+  }
+  
   // MARK: - Public Methods
   
   /**
