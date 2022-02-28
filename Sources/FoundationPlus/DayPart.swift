@@ -51,10 +51,10 @@ public enum DayPart {
   // MARK: - Public Static Methods
   
   /**
-   Gets the day part from a provided dart.
+   Gets the day part from a provided part.
    */
   public static func get(from date: Date) -> Self {
-    let hour = date.hour
+    let hour = Calendar.current.component(.hour, from: Date())
     if (5 ... 8).contains(hour) {
       return .morning
     } else if (9 ... 11).contains(hour) {
