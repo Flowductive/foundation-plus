@@ -16,6 +16,11 @@ public extension String {
     return self.components(separatedBy: CharacterSet.alphanumerics.inverted).joined().lowercased()
   }
   
+  /// The first word in the string.
+  var firstWord: String {
+    return components(separatedBy: " ").first ?? ""
+  }
+  
   // MARK: - Static Methods
   
   /**
