@@ -26,6 +26,25 @@ extension Array {
       return nil
     }
   }
+  
+  // MARK: - Public Subscripts
+  
+  public subscript(safe index: Int) -> Element? {
+    guard index >= 0, index < endIndex else { return nil }
+    return self[index]
+  }
+  
+  public subscript(wrap index: Int) -> Element {
+    guard !isEmpty else { fatalError("[FoundationPlus] You can't wrap access an empty array!") }
+    let wrapped = index % count
+    return self[wrapped]
+  }
+  
+  public subscript(safeWrap index: Int) -> Element? {
+    guard !isEmpty else { return nil }
+    let wrapped = index % count
+    return self[wrapped]
+  }
 }
 
 extension Array where Element: Equatable {
