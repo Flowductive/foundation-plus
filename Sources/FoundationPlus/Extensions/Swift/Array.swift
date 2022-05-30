@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array {
+public extension Array {
   
   // MARK: - Public Methods
   
@@ -16,7 +16,7 @@ extension Array {
    
    - returns: A random element in the array
    */
-  @inlinable public func dayElement() -> Element? {
+  @inlinable func dayElement() -> Element? {
     let cal = Calendar.current
     let day = cal.component(.day, from: Date())
     let index = day % count
@@ -29,29 +29,49 @@ extension Array {
   
   // MARK: - Public Subscripts
   
-  public subscript(safe index: Int) -> Element? {
+  subscript(safe index: Int) -> Element? {
     guard index >= 0, index < endIndex else { return nil }
     return self[index]
   }
   
-  public subscript(wrap index: Int) -> Element {
+  subscript(wrap index: Int) -> Element {
     guard !isEmpty else { fatalError("[FoundationPlus] You can't wrap access an empty array!") }
     let wrapped = index % count
     return self[wrapped]
   }
   
-  public subscript(safeWrap index: Int) -> Element? {
+  subscript(safeWrap index: Int) -> Element? {
     guard !isEmpty else { return nil }
     let wrapped = index % count
     return self[wrapped]
   }
 }
 
-extension Array where Element: Equatable {
+public extension Array where Element: Equatable {
   
   // MARK: - Public Static Methods
   
-  public static func - (lhs: [Element], rhs: [Element]) -> [Element] {
+  static func <= (lhs: inout Self, rhs: Element) {
+    if !lhs.contains(rhs) {
+      lhs.append(rhs)
+    }
+  }
+  
+  static func <= (lhs: inout Self, rhs: [Element]) {
+    for item in rhs {
+      lhs <= item
+    }
+  }
+  
+  static func -= (lhs: inout Self, rhs: Element) {
+    lhs -= [rhs]
+  }
+  
+  static func -= (lhs: inout Self, rhs: [Element]) {
+    lhs.removeAll{ rhs.contains($0) }
+  }
+  
+  static func - (lhs: [Element], rhs: [Element]) -> [Element] {
     var arr = lhs
     arr.removeAll(where: { rhs.contains($0) })
     return arr
@@ -65,7 +85,7 @@ extension Array where Element: Equatable {
    - parameter newElement: The new element to add
    - parameter limit: The maxiumum amount of items the array can have
    */
-  @inlinable public mutating func appendUniquely(_ newElement: Element, limit: Int? = nil) {
+  @inlinable mutating func appendUniquely(_ newElement: Element, limit: Int? = nil) {
     if !contains(newElement) {
       if let limit = limit {
         if count < limit {
@@ -82,7 +102,7 @@ extension Array where Element: Equatable {
    
    - parameter newElements: The new elements to add
    */
-  @inlinable public mutating func appendUniquely<S>(contentsOf newElements: S) where Element == S.Element, S: Sequence {
+  @inlinable mutating func appendUniquely<S>(contentsOf newElements: S) where Element == S.Element, S: Sequence {
     for element in newElements {
       self.appendUniquely(element)
     }
@@ -94,7 +114,7 @@ extension Array where Element: Equatable {
    - parameter newElement: The new element to insert
    - parameter limit: The maxiumum amount of items the array can have
    */
-  @inlinable public mutating func pushUniquely(_ newElement: Element, limit: Int? = nil) {
+  @inlinable mutating func pushUniquely(_ newElement: Element, limit: Int? = nil) {
     if !contains(newElement) {
       insert(newElement, at: 0)
       if let limit = limit, count > limit {
@@ -114,7 +134,7 @@ extension Array where Element: Equatable {
    
    - parameter match: The element to match
    */
-  @inlinable public mutating func removeAll(of match: Element) {
+  @inlinable mutating func removeAll(of match: Element) {
     self.removeAll(where: { $0 == match })
   }
   
@@ -124,7 +144,7 @@ extension Array where Element: Equatable {
    - parameter amount: The amount of random elements to pick
    - returns: An `Array` with the randomly picked elements.
    */
-  @inlinable public func pick(_ amount: Int) -> [Element] {
+  @inlinable func pick(_ amount: Int) -> [Element] {
     var copy: [Element] = self
     var arr: [Element] = []
     guard count > 0 else { return [] }
