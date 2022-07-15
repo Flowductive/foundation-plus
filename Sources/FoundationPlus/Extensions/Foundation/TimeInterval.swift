@@ -64,6 +64,9 @@ public extension TimeInterval {
    - returns: The `TimeInterval`, formatted
    */
   func formatted(_ mode: FormattingMode = .short) -> String {
+    if self < 0 {
+      return "∞"
+    }
     if self >= 1.days {
       return "\(days)\(mode.day(days != 1))"
     }
