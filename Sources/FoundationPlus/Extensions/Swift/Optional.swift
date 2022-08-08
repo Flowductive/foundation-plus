@@ -7,9 +7,9 @@
 
 import Foundation
 
-infix operator =?
-infix operator ==?
-infix operator !=?
+infix operator =?: AssignmentPrecedence
+infix operator ==?: ComparisonPrecedence
+infix operator !=?: ComparisonPrecedence
 
 extension Optional {
   
