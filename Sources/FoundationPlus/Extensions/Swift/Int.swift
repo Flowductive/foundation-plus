@@ -40,4 +40,11 @@ public extension Int {
   var s: String {
     if self == 1 { return "" } else { return "s" }
   }
+  
+  /// A string of the number with commas.
+  var withCommas: String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    return numberFormatter.string(from: NSNumber(value: self)) ?? String(self)
+  }
 }
