@@ -176,7 +176,10 @@ array.pick(2) // [0, 2]
 Optionally assign the right-hand side to the left-hand side if non-`nil`:
 
 ```swift
-let str: String =? myOptionalString // Only sets str if myOptionalString is non-nil
+var str: String = "Hello World"
+var optionalStr: String? = nil
+str =? optionalStr // Only sets str if myOptionalString is non-nil
+print(str) // "Hello, world"
 ```
 
 Optionally check if two `Optional` or non-`Optional` values are equal/nonequal, and return `false` for equality and `true` for inequality if either value is `nil`:
