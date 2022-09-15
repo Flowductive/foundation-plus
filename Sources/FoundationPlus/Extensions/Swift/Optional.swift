@@ -60,3 +60,21 @@ extension Optional where Wrapped: Equatable {
     }
   }
 }
+
+extension Optional where Wrapped: CustomStringConvertible {
+  
+  /**
+   Optionally unwraps a String and returns an empty string if the value is `nil`.
+   
+   - parameter transform: The string to return, provided an unwrapped version of the non-optional string value.
+   - parameter or: The backup string to provide in the case the wrapped value is `nil`.
+   - returns: The unwrapped or backup string.
+   */
+  public func ifLet(transform: (Wrapped) -> String = { String(describing: $0) }, or: String = "") -> String {
+    if let value = self {
+      return transform(value)
+    } else {
+      return or
+    }
+  }
+}
