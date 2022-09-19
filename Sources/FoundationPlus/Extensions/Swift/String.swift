@@ -73,3 +73,23 @@ public extension String {
     return self.components(separatedBy: CharacterSet.alphanumerics.union(otherSet).inverted).joined()
   }
 }
+
+#if canImport(SwiftUI)
+import SwiftUI
+
+public extension String {
+  
+  /**
+   Copies the string to the user's clipboard.
+   */
+  func copyToClipboard() {
+#if os(iOS)
+    UIPasteboard.general.string = self
+#else
+    let pasteboard = NSPasteboard.general
+    pasteboard.declareTypes([.string], owner: nil)
+    pasteboard.setString(self, forType: .string)
+#endif
+  }
+}
+#endif
