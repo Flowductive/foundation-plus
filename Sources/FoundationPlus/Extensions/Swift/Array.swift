@@ -101,10 +101,16 @@ public extension Array where Element: Equatable {
    Appends elements of an array to the array uniquely.
    
    - parameter newElements: The new elements to add
+   - parameter condition: The condition to filter new unique elements with.
    */
-  @inlinable mutating func appendUniquely<S>(contentsOf newElements: S) where Element == S.Element, S: Sequence {
+  @inlinable mutating func appendUniquely<S>(
+    contentsOf newElements: S,
+    where condition: (S.Element) -> Bool = { _ in true }
+  ) where Element == S.Element, S: Sequence {
     for element in newElements {
-      self.appendUniquely(element)
+      if condition(element) {
+        self.appendUniquely(element)
+      }
     }
   }
   

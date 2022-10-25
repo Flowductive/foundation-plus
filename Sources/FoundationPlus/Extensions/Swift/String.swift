@@ -21,6 +21,11 @@ public extension String {
     return components(separatedBy: " ").first ?? ""
   }
   
+  /// The first word in the string.
+  var lastWord: String {
+    return components(separatedBy: " ").last ?? ""
+  }
+  
   // MARK: - Static Methods
   
   /**
