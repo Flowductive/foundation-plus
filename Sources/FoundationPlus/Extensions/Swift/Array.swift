@@ -162,4 +162,12 @@ public extension Array where Element: Equatable {
     }
     return arr
   }
+  
+  @inlinable func first(matching match: Element) -> Element? {
+    self.first(where: { $0 == match })
+  }
+  
+  @inlinable func last(matching match: Element) -> Element? {
+    self.last(where: { $0 == match })
+  }
 }
