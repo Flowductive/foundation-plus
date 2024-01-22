@@ -18,12 +18,17 @@ public extension String {
   
   /// The first word in the string.
   var firstWord: String {
-    return components(separatedBy: " ").first ?? ""
+    return components(separatedBy: " ").first ?? self
   }
   
   /// The first word in the string.
   var lastWord: String {
-    return components(separatedBy: " ").last ?? ""
+    return components(separatedBy: " ").last ?? self
+  }
+  
+  /// Returns the string in possessive form; e.g. "Brenda" -> "Brenda's" or "Chris" -> "Chris'"
+  var possessive: String {
+    if last == "s" { return "'" } else { return "'s" }
   }
   
   // MARK: - Static Methods
